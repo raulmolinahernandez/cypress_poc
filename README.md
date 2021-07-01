@@ -31,3 +31,38 @@ yarn run cypress:open
 ```[bash]
 yarn run cypress:run
 ```
+
+## Plantilla básica de test
+
+Para esta POC (prueba de concepto) la sintaxis de creación del nombre del fichero donde meteremos nuestras pruebas, seguira el siguiente patron: nombre_prueba.spec.js
+
+Ejemplo plantilla:
+
+```[bash]
+
+describe('Descripción bloque de primera prueba', () => {
+
+    it('Prueba 1 o primer paso', () => {
+        // comandos cypress
+    })
+
+    it('Prueba 2 o segundo paso', () => {
+        // comandos cypress
+    });
+
+});
+
+// Bloques de pruebas relacionados entre si.
+
+describe('Descripción bloque de segunda prueba', () => {
+
+    it('Prueba 1 o primer paso', () => {
+        // comandos cypress
+    })
+
+    it('Prueba 2 o segundo paso', () => {
+        // comandos cypress
+    });
+
+});
+```
