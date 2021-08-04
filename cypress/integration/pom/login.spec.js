@@ -1,5 +1,5 @@
-import loginPage from '../../pages/login/loginPage'
-import opportunitiesPage from '../../pages/login/opportunitiesPage'
+import loginPage from '../../support/pages/login/loginPage'
+import opportunitiesPage from '../../support/pages/login/opportunitiesPage'
 
 describe('POM Implementation', () => {
 
@@ -14,7 +14,7 @@ describe('POM Implementation', () => {
         opportunitiesPage.elements.titleOpportunities().should('have.text', 'Mis oportunidades')
     })
 
-    it.only('Should display the message: Incorrect user or password', () => {
+    it('Should display the message: Incorrect user or password', () => {
         loginPage.typeUsername('userdummy');
         loginPage.typePassword('3P.d3v.test');
         loginPage.clickLogin();
