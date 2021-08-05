@@ -1,25 +1,47 @@
 import loginPage from '../../support/pages/login/loginPage'
 import opportunitiesPage from '../../support/pages/login/opportunitiesPage'
 
-describe('POM Implementation', () => {
+describe('POM Implementation', function() {
 
-    beforeEach(() => {
-        cy.visit("https://app.dev.energiaplus.io/");
+    beforeEach(function() {
+        cy.visit('https://app.dev.energiaplus.io/');
+
+        //Load a fixed set data located in a file
+        cy.fixture('fixturesEnergyPlus/energyPlusCredentials')
+        .then(credentials => {
+            this.credentials = credentials;
+        })
     });
-    it('Should login to Energy Plus page', () => {
-        loginPage.typeUsername('diego.serrano');
-        loginPage.typePassword('3P.d3v.test');
+    it('Should login to Energy Plus page', function() {
+        loginPage.typeUsername(this.credentials.partnerRepresentative);
+        loginPage.typePassword(this.credentials.standardPassword);
         loginPage.clickLogin();
 
         opportunitiesPage.elements.titleOpportunities().should('have.text', 'Mis oportunidades')
     })
 
-    it('Should display the message: Incorrect user or password', () => {
-        loginPage.typeUsername('userdummy');
-        loginPage.typePassword('3P.d3v.test');
+    it('Filling in the field with a wrong user, should display the message: Incorrect user or password', function() {
+        loginPage.typeUsername(this.credentials.dummyUsername);
+        loginPage.typePassword(this.credentials.standardPassword);
         loginPage.clickLogin();
 
         loginPage.elements.errorMessage().should('have.text', 'El usuario o la contraseña son incorrectos')
+    })
+
+    it('Filling in the field with a wrong password, should display the message: Incorrect user or password', function() {
+        loginPage.typeUsername(this.credentials.partnerRepresentative);
+        loginPage.typePassword(this.credentials.dummyPassword);
+        loginPage.clickLogin();
+
+        loginPage.elements.errorMessage().should('have.text', 'El usuario o la contraseña son incorrectos')
+    })
+
+    it('Filling in the field with a wrong user and password, should display the message: Incorrect user or password', function() {
+        loginPage.typeUsername(this.credentials.dummyUsername);
+        loginPage.typePassword(this.credentials.dummyPassword);
+        loginPage.clickLogin();
+
+        loginPage.elements.errorMessage().should('have.text', 'Ha superado el número de intentos')
     })
 
   })
